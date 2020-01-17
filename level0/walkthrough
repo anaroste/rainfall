@@ -1,0 +1,13 @@
+# on desassemble le main de l'exe level0 avec gdb
+gdb level0
+disas main
+# on remarque dans le code asm un call atoi 
+# puis un cmp de la valeur en dur 0x1a7(423)
+# dans le cas ou le cmp est faux on jump sur un fwrite
+# et si il est vrais on continue sur un execv
+# on regarde donc si il y a une string en dur qui commence par /bin
+scp -P 4242 level0@10.12.1.112:~/level0 ./
+strings level0 | grep /bin
+# et on trouve /bin/sh
+# donc si on tape en argument 423 l'exe lance un shell
+./level0 423
